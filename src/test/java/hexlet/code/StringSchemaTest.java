@@ -26,7 +26,7 @@ public final class StringSchemaTest {
 
         schema.required();
         assertFalse(schema.isValid(null));
-        assertTrue(schema.isValid(""));
+        assertFalse(schema.isValid(""));
         assertTrue(schema.isValid("coffee beans"));
     }
 
@@ -37,7 +37,7 @@ public final class StringSchemaTest {
         final String sentence = "what does the fox say";
 
         assertTrue(schema.contains("what").isValid(sentence));
-        assertFalse(schema.contains("what").isValid(sentence));
+        assertFalse(schema.contains("whatth").isValid(sentence));
     }
 
     @Test
