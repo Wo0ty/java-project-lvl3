@@ -1,4 +1,3 @@
-
 clean:
 	./gradlew clean
 
@@ -10,3 +9,7 @@ build:
 
 install:
 	./gradlew clean install
+	make lint
+
+lint:
+	./gradlew checkstyleMain checkstyleTest
