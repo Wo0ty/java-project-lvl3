@@ -4,22 +4,24 @@ import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
     public MapSchema required() {
-        super.addNewRule(data -> (data instanceof Map<?, ?>));
+        super.addNewRule(data -> (data instanceof Map));
         return this;
     }
 
-    public MapSchema sizeof(int size) {
-        super.addNewRule(data -> (data instanceof Map<?, ?> && ((Map<?, ?>) data).size() == size));
+    public MapSchema sizeof(int requiredNumElements) {
+        super.addNewRule(data -> (data == null || ((Map) data).size() == requiredNumElements));
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema> map) {
-        for (Map.Entry<String, BaseSchema> item: map.entrySet()) {
+    public MapSchema shape(Map<String, BaseSchema> rulesMap) {
+        for (Map.Entry<String, BaseSchema> item: rulesMap.entrySet()) {
             String itemKey = item.getKey();
             BaseSchema rulesForItem = item.getValue();
-            super.addNewRule(data -> data instanceof Map<?, ?>
-                    && ((Map<?, ?>) data).containsKey(itemKey)
-                    && rulesForItem.isValid(((Map<?, ?>) data).get(itemKey)));
+
+            super.addNewRule(data -> {
+                Object mapItemValue = ((Map) data).get(itemKey);
+                return rulesForItem.isValid(mapItemValue);
+            });
         }
 
         return this;

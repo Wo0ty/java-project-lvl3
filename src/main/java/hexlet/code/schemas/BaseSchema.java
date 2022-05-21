@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema {
-    private List<Predicate<Object>> rules = new LinkedList<>();
+    private List<Predicate<Object>> listOfRules = new LinkedList<>();
 
     public final <T> boolean isValid(T data) {
-        for (Predicate rule: rules) {
+        for (Predicate rule: listOfRules) {
             if (!rule.test(data)) {
                 return false;
             }
@@ -18,6 +18,6 @@ public abstract class BaseSchema {
     }
 
     public final void addNewRule(Predicate<Object> rule) {
-        this.rules.add(rule);
+        this.listOfRules.add(rule);
     }
 }
