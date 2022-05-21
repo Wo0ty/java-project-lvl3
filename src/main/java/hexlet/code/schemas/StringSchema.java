@@ -3,9 +3,9 @@ package hexlet.code.schemas;
 import java.util.Objects;
 
 public final class StringSchema extends BaseSchema {
-
-    public void required() {
+    public BaseSchema required() {
         super.addNewRule(data -> (data instanceof String) && (!((String) data).isEmpty()));
+        return this;
     }
 
     public StringSchema contains(String str) {
@@ -17,5 +17,4 @@ public final class StringSchema extends BaseSchema {
         super.addNewRule(data -> Objects.nonNull(data) && ((String) data).length() >= newMinLength);
         return this;
     }
-
 }

@@ -7,9 +7,9 @@ import java.util.function.Predicate;
 public abstract class BaseSchema {
     private List<Predicate<Object>> rules = new LinkedList<>();
 
-    public final <T> boolean isValid(T str) {
+    public final <T> boolean isValid(T data) {
         for (Predicate rule: rules) {
-            if (!rule.test(str)) {
+            if (!rule.test(data)) {
                 return false;
             }
         }
@@ -20,5 +20,4 @@ public abstract class BaseSchema {
     public final void addNewRule(Predicate<Object> rule) {
         this.rules.add(rule);
     }
-
 }

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class NumberSchemaTest {
-
     private Validator validator;
     private NumberSchema numberSchema;
 
@@ -21,25 +20,37 @@ public final class NumberSchemaTest {
     @Test
     void testRequired() {
         assertTrue(numberSchema.isValid(null));
+        assertTrue(numberSchema.isValid(new Object()));
+        assertTrue(numberSchema.isValid("coffee"));
 
         numberSchema.required();
         assertFalse(numberSchema.isValid(null));
 
-        final int value = 10;
-        assertTrue(numberSchema.isValid(value));
+        final int positiveValue = 10;
+        final int negativeValue = -10;
+        assertTrue(numberSchema.isValid(positiveValue));
+        assertTrue(numberSchema.isValid(negativeValue));
         assertTrue(numberSchema.isValid(0));
         assertFalse(numberSchema.isValid("5"));
+        assertFalse(numberSchema.isValid(new Object()));
 
     }
 
     @Test
     void testPositive() {
-        final int value1 = 10;
-        assertTrue(numberSchema.positive().isValid(value1));
-        final int value2 = -10;
-        assertFalse(numberSchema.isValid(value2));
-        assertFalse(numberSchema.isValid(0));
+        final int negativeValue = 10;
+        final int positiveValue = -10;
 
+        assertTrue(numberSchema.positive().isValid(negativeValue));
+        assertFalse(numberSchema.isValid(positiveValue));
+        assertFalse(numberSchema.isValid(0));
+        assertFalse(numberSchema.isValid("5"));
+        assertFalse(numberSchema.isValid(new Object()));
+        assertTrue(numberSchema.isValid(null));
+    }
+
+    @Test
+    void testRange() {
         final int start = 5;
         final int end = 10;
         numberSchema.range(start, end);
@@ -52,5 +63,4 @@ public final class NumberSchemaTest {
         assertFalse(numberSchema.isValid(value3));
         assertFalse(numberSchema.isValid(value4));
     }
-
 }
