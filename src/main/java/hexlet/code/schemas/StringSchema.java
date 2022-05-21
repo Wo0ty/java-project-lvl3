@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.Objects;
 
 public final class StringSchema extends BaseSchema {
-    public BaseSchema required() {
+    public StringSchema required() {
         super.addNewRule(data -> (data instanceof String) && (!((String) data).isEmpty()));
         return this;
     }
