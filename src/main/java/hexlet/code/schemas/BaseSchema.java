@@ -18,6 +18,12 @@ public abstract class BaseSchema {
     }
 
     public final void addNewRule(Predicate<Object> rule) {
-        this.listOfRules.add(rule);
+        if (!isRuleAdded(rule)) {
+            this.listOfRules.add(rule);
+        }
+    }
+
+    private boolean isRuleAdded(Predicate<Object> rule) {
+        return listOfRules.contains(rule);
     }
 }
